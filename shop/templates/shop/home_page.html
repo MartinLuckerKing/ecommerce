@@ -1,0 +1,36 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}
+<p>Accueil</p>
+{% endblock %}
+
+
+{% block content %}
+    <img class="banner landing-page" src="{% static "img/3-4.png" %}" alt="">
+    <div class="text-container">
+    <h2 class="center-anything text-line-space padding-top">Lorem ipsum</h2>
+        <p class="center-anything text-align-center color-text-lightgray text-line-space font-weight-lighter ">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vitae accumsan quam,
+        in ultrices ligula. Morbi a nibh sodales, aliquet arcu sit amet, suscipit turpis.
+
+        <br><br>
+        sed tincidunt metus imperdiet ac. Aenean sit amet diam ac enim facilisis dapibus. Nulla faucibus,
+    </p>
+</div>
+    <div class="grid padding-top place-items-center ">
+        {% for product in products|slice:":3" %}
+        <div>
+        <a href="{{ product.get_absolute_url }}">
+        <img  class="photo-size" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/imge.png" %}{% endif %}" alt="">
+        <br>
+        <a  href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+        {{ product.price }}€
+        </a>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

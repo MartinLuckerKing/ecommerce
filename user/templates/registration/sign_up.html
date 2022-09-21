@@ -1,0 +1,15 @@
+{% extends 'shop/base.html' %}
+{% load crispy_forms_filters %}
+{% block title %} <title>Login</title> {% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <h1 class="center-anything padding-top">Inscription</h1>
+    <div class="center-anything padding-top padding-bot">
+    <form method="post" >
+{% csrf_token %}
+        {{ form|crispy }}
+    <p>Have an account ? Login <a href="login.html">here</a>!</p>
+    <button type="submit" class="buy-now-button">Register</button>
+    </form>
+</div>
+{% endblock %}

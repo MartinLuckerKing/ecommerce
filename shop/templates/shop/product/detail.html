@@ -1,0 +1,31 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}*
+    {{ product.name }}
+{% endblock %}
+
+{% block content %}
+    <div class="product-detail-grid-wrapper content">
+                <img class="photo-size-product-detail" src="{% if product.image %}
+                {{ product.image.url }}{% else %}{% static "img/imge.png" %}{% endif %}"
+                     alt="{% if product.name %}{{ product.name }}{% else %}product{% endif %}">
+
+    <div class="text-align-left">
+            <h1 class="font-size-h1 title-font-color">{{ product.name }}</h1>
+            <p class="price-font-size">{{ product.price }}€</p>
+            <form action="{% url "cart:cart_add" product.id %}" method="post">
+                {{ cart_product_form }}
+                {% csrf_token %}
+                <br>
+                    <button class="add-to-cart-button" type="submit" value="Add to cart">Ajouter au panier</button>
+
+
+            </form>
+        <button class="buy-now-button" type="submit" value="Add to cart">Acheter maintenant</button>
+            {{ product.description|safe }}
+        <br>
+        <hr>
+                </div>
+    </div>
+{% endblock %}
