@@ -201,6 +201,11 @@ body{
   height: 20.0rem;
 }
 
+.photo-size-popular-product {
+  width: 35.0rem;
+  height: 35.0rem;
+}
+
 /* -------------------- End Product Photos -------------------- */
 
 
@@ -209,7 +214,7 @@ body{
 .landing-page {
   object-fit: cover;
   width: 100%;
-  max-height: 40.0rem;
+  max-height: 50.0rem;
 }
 
 
@@ -273,7 +278,9 @@ body{
   padding-top: 3.6rem;
 }
 
-
+.margin-top {
+  margin-top: 3.6rem;
+}
 
 .link {
   margin-left: 2.5rem;
@@ -387,6 +394,16 @@ body{
   padding-bottom: 3.6rem ;
 }
 
+.margin-top {
+  margin-top: 3.6rem;
+}
+
+.container-test {
+  background-color: #fbfafa;
+  height: 10rem;
+  width: 100%;
+}
+
 /* -------------------- Product Detail -------------------- */
 
 .product-detail-grid-wrapper {
@@ -483,5 +500,10 @@ hr {
   padding-top: 0.6rem;
 }
 
+.margin-top-footer {
+  margin-top: 10rem;
+}
 
-
+a {
+  text-decoration: none;
+}

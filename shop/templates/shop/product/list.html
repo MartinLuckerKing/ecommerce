@@ -15,7 +15,7 @@
         <a href="{{ product.get_absolute_url }}">
             <img  class="photo-size" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/imge.png" %}{% endif %}" alt="">
             <br>
-            <a  href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+            <a class="link"  href="{{ product.get_absolute_url }}">{{ product.name }}</a>
             {{ product.price }}€
         </a>
     </div>

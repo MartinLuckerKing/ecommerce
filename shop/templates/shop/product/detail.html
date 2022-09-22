@@ -25,7 +25,28 @@
         <button class="buy-now-button" type="submit" value="Add to cart">Acheter maintenant</button>
             {{ product.description|safe }}
         <br>
-        <hr>
+
                 </div>
-    </div>
+    </div >
+
+    <br>
+        <hr class="padding-bot">
+    <h3 class="center-anything">LIVRAISON OFFERTE</h3>
+    <p class="center-anything padding-bot">Livraison offertes dès 160€ d'achats.</p>
+    <h3 class="content">Produit les plus populaires</h3>
+        <div class="grid padding-top place-items-center ">
+        {% for product in products|slice:"2:" %}
+            <div>
+            <a href="{{ product.get_absolute_url }}">
+            <img  class="photo-size-popular-product" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/imge.png" %}{% endif %}" alt="">
+            <br>
+            <a  href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+            {{ product.price }}€
+            </a>
+            </div>
+        {% endfor %}
+
+</div>
+
 {% endblock %}
+
