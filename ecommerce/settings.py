@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-^hv^!d@0l0et*#@in1i6ie3r7^i83ppz3kp$kgfw(-oh(rqb#3'
-
+SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -42,12 +42,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ecommerce',
     'crispy_forms',
-    'django_quill',
     'shop.apps.ShopConfig',
     'cart.apps.CartConfig',
     'user.apps.UserConfig',
     'order.apps.OrderConfig',
     'ckeditor',
+    'dashboard.apps.DashboardConfig',
 ]
 
 MIDDLEWARE = [
@@ -141,8 +141,9 @@ MEDIA_URL = 'media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
-
+STRIPE_PUBLIC_KEY = "pk_test_51LkRZLA17HAhCguqZtDIpIEcSM5zFxjHU5fwAfemQtUTZXourDORiEUVHg0ek5jtHm8RnS4SqGVDOdlznQmERz8A00jjl4V3Lh"
+STRIPE_SECRET_KEY = "sk_test_51LkRZLA17HAhCguqSGUwCs2SQolxb6q3zv6jYuw4cwYhJBOt6M753jMIwvxW7Or1bv2VrezFfNYQdepIN3MU65ru00XrWBkgGM"
+STRIPE_WEBHOOK_SECRET = "whsec_5ea3f132d19fe59739b48304497ca2e4f6803b413fd104809569c47c644c5b9b"
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
@@ -151,5 +152,4 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CART_SESSION_ID = 'cart'
-STRIPE_API_KEY_PUBLISHABLE = 'pk_test_51LkRZLA17HAhCguqZtDIpIEcSM5zFxjHU5fwAfemQtUTZXourDORiEUVHg0ek5jtHm8RnS4SqGVDOdlznQmERz8A00jjl4V3Lh'
-STRIPE_API_KEY_HIDDEN = 'sk_test_51LkRZLA17HAhCguqSGUwCs2SQolxb6q3zv6jYuw4cwYhJBOt6M753jMIwvxW7Or1bv2VrezFfNYQdepIN3MU65ru00XrWBkgGM'
+

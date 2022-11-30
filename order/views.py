@@ -1,70 +1,144 @@
-import json
-import stripe
-
-from django.conf import settings
-from django.http import JsonResponse
+import decimal
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-
+import datetime
+import json
 from cart.cart import Cart
+from cart.forms import CartAddProductForm
+from .forms import OrderForm
+from .models import Order, Payment, OrderProduct
+from shop.models import Product
 
-from .models import Order, OrderItem
 
-
-def start_order(request):
+@login_required(login_url='login')
+def checkout(request):
     cart = Cart(request)
-    data = json.loads(request.body)
-    total_price = 0
-    YOUR_DOMAIN = "http://127.0.0.1:8000/"
-
-    items = []
-
+    form = OrderForm(request.POST)
     for item in cart:
-        product = item['product']
-        total_price += product.price * int(item['quantity'])
+        item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'],
+                                                                   'override': True})
+    context = {
+        'cart': cart,
+        'form': form
+    }
+    return render(request, 'order/checkout.html', context)
 
-        obj = {
-            'price_data': {
-                'currency': 'usd',
-                'product_data': {
-                    'name': product.name,
-                },
-                'unit_amount': product.price,
-            },
-            'quantity': item['quantity']
-        }
 
-        items.append(obj)
+def payment(request):
+    cart = Cart(request)
+    body = json.loads(request.body)
+    order = Order.objects.get(user=request.user, is_ordered=False, order_number=body['orderID'])
 
-    stripe.api_key = settings.STRIPE_API_KEY_HIDDEN
-    session = stripe.checkout.Session.create(
-        payment_method_types=['card'],
-        line_items=items,
-        mode='payment',
-        success_url=YOUR_DOMAIN + '/success/',
-        cancel_url=YOUR_DOMAIN + '/cancel/',
+    total_price = cart.get_total_price()
+    payment = Payment(
+        user = request.user,
+        payment_id = body['transID'],
+        payment_method = body['payment_method'],
+        amount_paid = total_price,
+        status = body['status'],
     )
-    payment_intent = session.payment_intent
-
-    first_name = data['first_name']
-    last_name = data['last_name']
-    email = data['email']
-    address = data['address']
-    zipcode = data['zipcode']
-    place = data['place']
-    phone = data['phone']
-
-    order = Order.objects.create(user=request.user, first_name=first_name, last_name=last_name, email=email,
-                                 phone=phone, address=address, zipcode=zipcode, place=place)
-    order.payment_intent = payment_intent
-    order.paid_amount = total_price
-    order.paid = True
+    payment.save()
+    order.payment = payment
+    order.is_ordered = True
     order.save()
+    cart_items = cart
 
-    for item in cart:
-        product = item['product']
-        quantity = int(item['quantity'])
-        price = product.price * quantity
+    for item in cart_items:
+        orderproduct = OrderProduct()
+        orderproduct.order_id = order.id
+        orderproduct.payment = payment
+        orderproduct.user_id = request.user.id
+        orderproduct.product_id = item.get('product_id')
+        orderproduct.quantity = item.get('quantity')
+        orderproduct.product_price = item.get('price')
+        orderproduct.total_price_per_product = cart.get_total_price_by_item(product=item)
+        orderproduct.total_price = cart.get_total_price()
+        orderproduct.ordered = True
+        orderproduct.save()
 
-        item = OrderItem.objects.create(order=order, product=product, price=price, quantity=quantity)
+        quantity = item.get('quantity')
+        stock = item.get('product').stock
+        print(stock)
+        product = Product.objects.get(id=item.get('product_id'))
+        new_stock = stock - quantity
+        product.stock = new_stock
+        product.save(update_fields=['stock'])
+        print(new_stock)
+    return render(request, 'order/payment.html')
 
-    return JsonResponse({'session': session, 'order': payment_intent})
+
+def place_order(request, total=0):
+    tax = decimal.Decimal(0.2)
+    current_user = request.user
+    cart = Cart(request)
+    cart_total = cart.get_total_price()
+
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            data = Order()
+            data.user = current_user
+            data.first_name = form.cleaned_data['first_name']
+            data.last_name = form.cleaned_data['last_name']
+            data.phone = form.cleaned_data['phone']
+            data.email = form.cleaned_data['email']
+            data.address_line_1 = form.cleaned_data['address_line_1']
+            data.address_line_2 = form.cleaned_data['address_line_2']
+            data.country = form.cleaned_data['country']
+            data.state = form.cleaned_data['state']
+            data.city = form.cleaned_data['city']
+            data.order_note = form.cleaned_data['order_note']
+            data.order_total = cart_total
+            data.tax = cart_total*tax
+            data.ip = request.META.get('REMOTE_ADDR')
+            data.save()
+            # Generate order number
+            yr = int(datetime.date.today().strftime('%Y'))
+            dt = int(datetime.date.today().strftime('%d'))
+            mt = int(datetime.date.today().strftime('%m'))
+            d = datetime.date(yr,mt,dt)
+            current_date = d.strftime("%Y%m%d") #20210305
+            order_number = current_date + str(data.id)
+            data.order_number = order_number
+            data.save()
+
+            order = Order.objects.get(user=current_user, is_ordered=False, order_number=order_number)
+            context = {
+                'order': order,
+                #'cart_items': cart_items,
+                'total': total,
+                'form': form,
+                'cart': cart,
+                #'tax': tax,
+                #'grand_total': grand_total,
+            }
+            return render(request, 'order/payment.html', context)
+    else:
+        return redirect('checkout')
+
+
+def order_complete(request):
+    order_number = request.GET.get('order_number')
+    transID = request.GET.get('payment_id')
+
+    try:
+        order = Order.objects.get(order_number=order_number, is_ordered=True)
+        ordered_products = OrderProduct.objects.filter(order_id=order.id)
+
+        subtotal = 0
+        for i in ordered_products:
+            subtotal += i.product_price * i.quantity
+
+        payment = Payment.objects.get(payment_id=transID)
+
+        context = {
+            'order': order,
+            'ordered_products': ordered_products,
+            'order_number': order.order_number,
+            'transID': payment.payment_id,
+            'payment': payment,
+            'subtotal': subtotal,
+        }
+        return render(request, 'order/order_complete.html', context)
+    except (Payment.DoesNotExist, Order.DoesNotExist):
+        return redirect('home')

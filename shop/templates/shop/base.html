@@ -16,10 +16,14 @@
 {% block navbar %}
 
   <nav class="navbar">
-    <div class="content">
-      <div class="logo">
-        <a href="{% url "shop:home_page" %}">Espace Condorcet</a>
+    <div class="center-anything padding-bot">
+        <div class="logo content">
+        <a class="text-align-center" href="{% url "shop:home_page" %}"> Atelier Couture <br> Espace Condorcet</a>
       </div>
+    </div>
+  <div class="center-anything">
+    <div class="content">
+
       <ul class="menu-list">
         <div class="icon cancel-btn">
           <i class="fas fa-times"></i>
@@ -33,7 +37,7 @@
           <a class="link buttton-dropdown" href="{% url "shop:product_list" %}">Tous nos Produits</a>
           <br>
           {% for categorie in categories %}
-          <a class="link buttton-dropdown" href="{% url "shop:product_list_by_category" categorie.name %}">{{ categorie.name }}</a>
+          <a class="link buttton-dropdown" href="{% url "shop:product_list_by_category" categorie.slug %}">{{ categorie.name }}</a>
               <br>
 
           {% endfor %}
@@ -56,7 +60,7 @@
               <a class="link-margin-left-zero" href="{% url "login" %}">Se connecter</a>
           {% endif %}
           {% if request.user.is_authenticated %}
-              <p class="link">Bonjour {{ request.user.username }}</p>
+              <p class="link"><a href="{% url 'dashboard:dashboard' %}">Bonjour {{ request.user.username }} </a>    </p>
               <a class="link" href="{% url "logout" %}">Se déconnecter</a>
           {% endif %}
 
@@ -65,6 +69,7 @@
         <i class="fas fa-bars"></i>
       </div>
     </div>
+  </div>
   </nav>
 
 
@@ -76,10 +81,10 @@
 
 {% block footer %}
     <footer class="footer padding-top-footer">
-  	 <div class="container ">
-  	 	<div class="row footer-grid ">
+  	 <div class="container text-line-space">
+  	 	<div class="row footer-grid">
   	 		<div class="footer-col" >
-  	 			<h4 class="">Aide</h4>
+  	 			<h2 class="line-height-title-footer">Aide</h2>
   	 			<ul>
   	 				<li><a class="link " href="#">Guide des tailles</a></li>
   	 				<li><a class="link" href="#">Points de vente</a></li>
@@ -87,7 +92,7 @@
   	 			</ul>
   	 		</div>
   	 		<div class="footer-col">
-  	 			<h4 class="">Infos</h4>
+  	 			<h2 class="line-height-title-footer">Infos</h2>
   	 			<ul>
   	 				<li><a class="link" href="#">Contact</a></li>
   	 				<li><a class="link" href="#">Condition de vente</a></li>
@@ -95,16 +100,30 @@
   	 			</ul>
   	 		</div>
   	 		<div class="footer-col">
-  	 			<h4>follow us</h4>
-  	 			<div class="social-links">
-  	 				<a href="#"><i class="fab fa-facebook-f"></i></a>
-  	 				<a href="#"><i class="fab fa-twitter"></i></a>
-  	 				<a href="#"><i class="fab fa-instagram"></i></a>
-  	 				<a href="#"><i class="fab fa-linkedin-in"></i></a>
+  	 			<h2 class="text-align-center">Atelier Couture <br> Espace Condorcet</h2>
+
   	 			</div>
   	 		</div>
   	 	</div>
-         </div>
+        <br>
+        <div class="social-links ">
+            <h3 class="center-anything">Suivez-nous</h3>
+            <div class="center-anything padding-top padding-bot">
+                <a href="#"><img class="social-media-icons-size-footer" src="https://img.icons8.com/color/48/000000/facebook-new.png"/></a>
+                <a class="margin-left-footer-follow-us" href="#"><img class="social-media-icons-size-footer" src="https://img.icons8.com/color/48/000000/instagram-new--v1.png"/></a>
+                <a class="margin-left-footer-follow-us" href="#"><img class="social-media-icons-size-footer" src="https://img.icons8.com/color/48/000000/twitter--v1.png"/></a>
+            </div>
+        </div>
+        <hr>
+        <br>
+            <div class="center-anything padding-top padding-bot">
+                <a href="#"><img class="payment-icons-size-footer" src="https://img.icons8.com/color/48/000000/visa.png"/></a>
+                <a class="margin-left-footer-payment-icons" href="#"><img class="payment-icons-size-footer" src="https://img.icons8.com/color/48/000000/paypal.png"/></a>
+                <a class="margin-left-footer-payment-icons" href="#"><img class="payment-icons-size-footer" src="https://img.icons8.com/color/48/000000/stripe.png"/></a>
+                <a class="margin-left-footer-payment-icons" href="#"><img class="payment-icons-size-footer" src="https://img.icons8.com/color/48/000000/mastercard-logo.png"/></a>
+                <a class="margin-left-footer-payment-icons" href="#"><img class="payment-icons-size-footer" src="https://img.icons8.com/color/48/000000/amex.png"/></a>
+            </div>
+        <p class="center-anything brand-footer-font-size padding-bot">© 2022, <a href="{% url "shop:home_page" %}">Atelier Couture Espace Condorcet</a></p>
 
         </footer>
 
@@ -114,4 +133,14 @@
 </body>
     <script src="{% static "js/test.js" %}"></script>
   <script src="{% static "js/navbar.js" %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        function myFunction(smallImg)
+        {
+            const fullImg = document.getElementById("mainImage");
+            fullImg.src = smallImg.src;
+        }
+    </script>
+<!-- PayPal Script -->
+
 </html>

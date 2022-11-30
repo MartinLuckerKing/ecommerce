@@ -17,16 +17,19 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from cart.views import SuccessView, CancelView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('cancel', CancelView.as_view(), name='cancel'),
-    path('success', CancelView.as_view(), name='success'),
+    path('order/', include('order.urls', namespace='order')),
     path('cart/', include('cart.urls', namespace='cart')),
     path('user/', include('user.urls', namespace='user')),
+    path('dashboard/', include('dashboard.urls', namespace='dashboard')),
     path('', include('django.contrib.auth.urls')),
     path('', include('shop.urls', namespace='shop')),
+
+
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

@@ -1,6 +1,6 @@
-from django.contrib import admin
+import admin_thumbnails
 from .models import Category, Product, MultiProductImage
-from order.models import Order
+from django.contrib import admin
 # Register your models here.
 
 
@@ -10,27 +10,22 @@ class CategoryAdmin(admin.ModelAdmin):
     prepopulated_field = {'slug': ('name',)}
 
 
+@admin_thumbnails.thumbnail('images')
 class MultiProductImageAdmin(admin.StackedInline):
     model = MultiProductImage
 
 
 @admin.register(Product)
+@admin_thumbnails.thumbnail('main_image')
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'image', 'price', 'available', 'created', 'updated']
+    list_display = ['name', 'slug', 'price', 'created', 'updated']
     inlines = [MultiProductImageAdmin]
-    list_filter = ['available', 'created', 'updated']
-    list_editable = ['price', 'available']
+    list_filter = ['created', 'updated']
+    list_editable = ['price']
     prepopulated_field = {'slug': ('name',)}
 
     class Meta:
        model = Product
 
 
-@admin.register(MultiProductImage)
-class PostImageAdmin(admin.ModelAdmin):
-    pass
 
-
-@admin.register(Order)
-class Order(admin.ModelAdmin):
-    pass

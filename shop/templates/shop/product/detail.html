@@ -7,9 +7,24 @@
 
 {% block content %}
     <div class="product-detail-grid-wrapper content">
-                <img class="photo-size-product-detail" src="{% if product.image %}
-                {{ product.image.url }}{% else %}{% static "img/imge.png" %}{% endif %}"
+        <div>
+            <div>
+                <img id="mainImage" class="photo-size-product-detail" src="
+                           {{ product.main_image.url }}"
                      alt="{% if product.name %}{{ product.name }}{% else %}product{% endif %}">
+            </div>
+        <div>
+        <img class="thumb photo-size-product-detail-max" src="{% if product.main_image.url %}
+
+                       {{ product.main_image.url }}{% else %}{% static "img/imge.png" %}{% endif %}" onclick="myFunction(this)">
+        {% for image in multiimages %}
+
+            <img class="thumb photo-size-product-detail-max" src="{% if image.images.url %}
+
+                       {{ image.images.url }}{% else %}{% static "img/imge.png" %}{% endif %}" onclick="myFunction(this)">
+        {% endfor %}
+    </div>
+    </div>
 
     <div class="text-align-left">
             <h1 class="font-size-h1 title-font-color">{{ product.name }}</h1>
@@ -23,30 +38,13 @@
 
             </form>
         <button class="buy-now-button" type="submit" value="Add to cart">Acheter maintenant</button>
-            {{ product.description|safe }}
-        <br>
-
+            <p class="margin-top-2-6">{{ product.description|safe }}</p>
                 </div>
+
     </div >
 
-    <br>
         <hr class="padding-bot">
     <h3 class="center-anything">LIVRAISON OFFERTE</h3>
     <p class="center-anything padding-bot">Livraison offertes dès 160€ d'achats.</p>
-    <h3 class="content">Produit les plus populaires</h3>
-        <div class="grid padding-top place-items-center ">
-        {% for product in products|slice:"2:" %}
-            <div>
-            <a href="{{ product.get_absolute_url }}">
-            <img  class="photo-size-popular-product" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/imge.png" %}{% endif %}" alt="">
-            <br>
-            <a  href="{{ product.get_absolute_url }}">{{ product.name }}</a>
-            {{ product.price }}€
-            </a>
-            </div>
-        {% endfor %}
-
-</div>
 
 {% endblock %}
-

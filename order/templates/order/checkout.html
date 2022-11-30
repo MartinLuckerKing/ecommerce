@@ -1,0 +1,31 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block content %}
+    <h4 class="center-anything margin-bot">Adresse de Livraison</h4>
+    <div class="content center-anything">
+
+
+    <form class="" action="{% url 'order:place_order' %}" method="POST">
+<div class="container-checkout-info ">
+      {% csrf_token %}
+<div>
+        {% for fm in form %}
+            <div class="textinput-item margin-checkout">
+                {{ fm.label_tag }} <div class="textinput">{{ fm }}</div> <div class="color-error error-message">{{ fm.errors|striptags }}</div><br>
+
+            </div>
+
+        {% endfor %}
+
+
+        <button type="submit" name="submit" class="buy-now-button margin-right">Place Order</button>
+        <button class="buy-now-button"><a href="{% url 'shop:home_page' %}" class="">Continue Shopping</a></button>
+    </div>
+        </div>
+    </form>
+
+
+</div>
+
+{% endblock %}

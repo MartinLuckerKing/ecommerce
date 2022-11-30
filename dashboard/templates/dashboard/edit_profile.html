@@ -1,0 +1,29 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="content-dashboard">
+    <div class="container-dashboard ">
+        <div class="container-dashboard-item margin-top">
+            <ul class="menu-list">
+                <li><a href="{% url 'dashboard:dashboard' %}">Dashboard</a></li>
+                <li><a href="{% url 'dashboard:my_orders' user_id=user.id %}">My Orders</a></li>
+                <li><a href="{% url 'dashboard:edit_profile' %}">Edit Profile</a></li>
+                <li><a href="{% url 'dashboard:change_password' %}">Change Password</a></li>
+
+            </ul>
+        </div >
+<form action="" method="POST" class="margin-top">
+    {% csrf_token %}
+    {% for fm in form %}
+        <p>{{ fm.label_tag }}</p> <p class="textinput">{{ fm }}</p> {{ fm.errors|striptags }}<br> <br>
+    {% endfor %}
+
+<button type="submit" name="submit" class="buy-now-button">Envoyer</button>
+</form>
+</div >
+</div >
+
+
+
+{% endblock %}

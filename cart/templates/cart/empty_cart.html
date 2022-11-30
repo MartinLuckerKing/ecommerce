@@ -1,0 +1,16 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block title %}
+
+{% endblock %}
+
+
+{% block content %}
+    <section class="content center-top-bottom ">
+        <h1 class="margin-top"> Votre Panier Est Vide</h1>
+        <div class=" ">
+            <a class="buy-now-button all-product-btn" href="{% url 'shop:product_list' %}"><p class="center-anything">Tous les Produits</p></a>
+        </div>
+    </section>
+{% endblock %}

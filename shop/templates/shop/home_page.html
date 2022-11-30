@@ -7,30 +7,90 @@
 
 
 {% block content %}
-    <img class="banner landing-page" src="{% static "img/3-4.png" %}" alt="">
-    <div class="text-container">
-    <h2 class="center-anything text-line-space padding-top">Lorem ipsum</h2>
-        <p class="center-anything text-align-center color-text-lightgray text-line-space font-weight-lighter ">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vitae accumsan quam,
-        in ultrices ligula. Morbi a nibh sodales, aliquet arcu sit amet, suscipit turpis.
+    <img class="border-radius banner content landing-page center-anything " src="{% static "img/assortiment-couture.jpg" %}" alt="">
 
-        <br><br>
-        sed tincidunt metus imperdiet ac. Aenean sit amet diam ac enim facilisis dapibus. Nulla faucibus,
-    </p>
+    <div class="content">
+    <h2 class="content padding-top">Nouvelle collections</h2>
+        <div class="grid-collection padding-top ">
+        {% for category in categories %}
+            <div class="content">
+                {% if category.is_featured_home_page %}
+                    <a href="{{ category.get_absolute_url }}"><img class="collection-size landing-page" src="{{ category.image.url }}" alt=""></a>
+                    <br>
+                    <a class="center-anything padding-bot" href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+                {% endif %}
+        </div>
+            {% endfor %}
+rtrg
+    </div>
+    </div>
+
+    <div class="grid-collection content padding-top">
+        <img class="collection-size landing-page" src="{% static "img/seamstress-gcf37d7d0b_1920.jpg" %}" alt="">
+        <div class="text-align-left">
+            <h2>Lorem Ipsum</h2>
+            <br>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A animi, at cumque cupiditate eaque et facilis,
+                fugiat ipsam ipsum laborum magni maiores nesciunt quaerat qui quia rem velit veritatis vero.</p>
+    </div>
 </div>
-    <div class="grid padding-top place-items-center ">
-        {% for product in products|slice:":3" %}
+    <h2 class="center-anything padding-bot padding-top">Nos Engagement</h2>
+    <div class="container-test padding-top padding-bot">
+            <div class="content grid-engagement">
+                <div>
+                    <div class="center-anything padding-bot">
+                    <img class="social-icon" src="{% static "img/Impact social.png" %}">
+                        </div>
+                    <h3 class="center-anything text-align-center">Lien Social</h3>
+                    <br>
+                <p class="center-anything text-align-center text-line-space">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut beatae consequatur delectus explicabo harum libero,
+            minima nesciunt nostrum nulla omnis praesentium tenetur velit. Alias aliquid eligendi reiciendis? Adipisci, facilis natus!sfd
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquid, doloremque excepturi
+                    exercitationem hic illum in ipsum iusto labore laboriosam nihil non odio quod recusandae reiciendis suscipit tempore ut voluptatibus.
+                </p>
+                    </div>
+                <div>
+                    <div class="center-anything padding-bot">
+                        <img class="social-icon" src="{% static "img/kisspng-handicraft-computer-icons-handcraft-5b23f8dba56a99.3409239315290841236776.png" %}">
+                        </div>
+                    <h3 class="center-anything text-align-center">Fabrication Française à la Main</h3>
+                    <br>
+                <p class="center-anything text-align-center text-line-space">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut beatae consequatur delectus explicabo harum libero,
+            minima nesciunt nostrum nulla omnis praesentium tenetur velit. Alias aliquid eligendi reiciendis? Adipisci, facilis natus!sfd
+        dfsdfsdfsdfsdfsdfsdfdsfsf Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquid, doloremque excepturi
+                    exercitationem hic illum in ipsum iusto labore laboriosam nihil non odio quod recusandae reiciendis suscipit tempore ut voluptatibus.
+                </p>
+                    </div>
+                <div>
+                    <div class="center-anything padding-bot">
+                        <img class="social-icon" src="{% static "img/43410.png" %}">
+                        </div>
+                    <h3 class="center-anything text-align-center">Intemporelles</h3>
+                    <br>
+                <p class="center-anything text-align-center text-line-space">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut beatae consequatur delectus explicabo harum libero,
+            minima nesciunt nostrum nulla omnis praesentium tenetur velit. Alias aliquid eligendi reiciendis? Adipisci, facilis natus!sfd
+        dfsdfsdfsdfsdfsdfsdfdsfsf Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquid, doloremque excepturi
+                    exercitationem hic illum in ipsum iusto labore laboriosam nihil non odio quod recusandae reiciendis suscipit tempore ut voluptatibus.
+                </p>
+                    </div>
+            </div>
+    </div>
+    <h2 class="content padding-top">Nouveaux Produits</h2>
+    <div class="grid padding-top place-items-center">
+        {% for product in products|slice:":4" %}
         <div>
-        <a href="{{ product.get_absolute_url }}">
-        <img  class="photo-size" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/imge.png" %}{% endif %}" alt="">
-        <br>
-        <a  href="{{ product.get_absolute_url }}">{{ product.name }}</a>
-        {{ product.price }}€
-        </a>
+            <a href="{{ product.get_absolute_url }}">
+            <img  class="photo-size" src="{% if product.main_image %}{{ product.main_image.url }}{% else %}{% static "img/imge.png" %}{% endif %}" alt="">
+            <br>
+            <a href="{{ product.get_absolute_url }}"><p class="text-card display-block margin-left-card ">{{ product.name }}</p></a>
+            <p class="float-right price-card margin-right-card">{{ product.price }}€</p>
+            <p class="padding-bot"></p>
+            </a>
         </div>
 
         {% endfor %}
-
-    </div >
-
+</div>
 {% endblock %}

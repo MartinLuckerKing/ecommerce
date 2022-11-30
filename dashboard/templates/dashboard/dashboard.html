@@ -1,0 +1,37 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+
+
+{% block content %}
+    <div class="content-dashboard">
+        <div class="container-dashboard">
+            <div class="container-dashboard-item margin-top">
+
+                <ul class="menu-list">
+                    <li><a href="{% url 'dashboard:dashboard' %}">Dashboard</a></li>
+                    <li><a href="{% url 'dashboard:my_orders' user_id=user.id %}">My Orders</a></li>
+                    <li><a href="{% url 'dashboard:edit_profile' %}">Edit Profile</a></li>
+                    <li><a href="{% url 'dashboard:change_password' %}">Change Password</a></li>
+
+                </ul>
+            </div >
+
+                <div class="container-dashboard-item margin-top">
+                    <p>Bonjour {{ request.user.username }}</p>
+                    <br>
+                    <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Aliquam assumenda, corporis culpa deleniti distinctio doloremque dolorum eos excepturi fugiat illo itaque molestias nemo perferendis saepe vitae? Animi fuga hic veritatis!</p>
+                    <br>
+                    <hr>
+                    <br>
+                    <p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est facilis hic illo libero quisquam repellendus soluta tenetur vero voluptatibus.
+                        A aliquid at culpa, ipsum necessitatibus nesciunt quibusdam soluta temporibus voluptatem.</p>
+
+            </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "shop/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="content-dashboard">
+    <div class="container-dashboard">
+        <div class="container-dashboard-item margin-top">
+            <ul class="menu-list">
+                <li><a href="{% url 'dashboard:dashboard' %}">Dashboard</a></li>
+                <li><a href="{% url 'dashboard:my_orders' user_id=user.id %}">My Orders</a></li>
+                <li><a href="{% url 'dashboard:edit_profile' %}">Edit Profile</a></li>
+                <li><a href="{% url 'dashboard:change_password' %}">Change Password</a></li>
+
+            </ul>
+        </div >
+    <table class="margin-top">
+
+    <thead>
+    <tr class="">
+
+        <th class="padding-right">Username</th>
+        <th class="padding-right">Commande #</th>
+        <th class="padding-right">Nom de Facturation</th>
+        <th class="padding-right">Téléphone</th>
+        <th class="padding-right">Prix Total</th>
+        <th class="padding-right">Date</th>
+
+    </tr>
+</thead>
+
+    <tbody>
+
+{% for ord in order %}
+    <tr>
+    {% if request.user.username == ord.user.username %}
+        <td>{{ ord.user.username }}</td>
+        <td>{{ ord.order_number }}</td>
+        <td>{{ ord.first_name }} {{ ord.last_name }}</td>
+        <td>{{ ord.phone }}</td>
+        <td>{{ ord.order_total }}</td>
+        <td>{{ ord.created_at }}</td>
+    </tr>
+    {% endif %}
+{% endfor %}
+
+</tbody>
+</table>
+</div >
+</div >
+
+{% endblock %}
