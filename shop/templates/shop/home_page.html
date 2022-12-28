@@ -1,62 +1,69 @@
 {% extends "shop/base.html" %}
 {% load static %}
 
-{% block title %}
-<p>Accueil</p>
-{% endblock %}
-
-
 {% block content %}
-    <img class="border-radius banner content landing-page center-anything " src="{% static "img/assortiment-couture.jpg" %}" alt="">
+    <img class="content banner center-anything margin-top" src="{% static "img/assortiment-couture.jpg" %}" alt="">
 
     <div class="content">
-    <h2 class="content padding-top">Nouvelle collections</h2>
-        <div class="grid-collection padding-top ">
+    <h2 class="margin-top">Nouvelle collections</h2>
+        <div class="grid-collection">
         {% for category in categories %}
             <div class="content">
-                {% if category.is_featured_home_page %}
-                    <a href="{{ category.get_absolute_url }}"><img class="collection-size landing-page" src="{{ category.image.url }}" alt=""></a>
+                {% if category.is_featured_home_page == True %}
+                    <a href="{{ category.get_absolute_url }}"><img class="banner" src="{{ category.image.url }}" alt="{{ category.name }}"></a>
                     <br>
-                    <a class="center-anything padding-bot" href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+                    <a class="center-anything margin-bot" href="{{ category.get_absolute_url }}">{{ category.name }}</a>
                 {% endif %}
         </div>
             {% endfor %}
-rtrg
     </div>
     </div>
 
-    <div class="grid-collection content padding-top">
-        <img class="collection-size landing-page" src="{% static "img/seamstress-gcf37d7d0b_1920.jpg" %}" alt="">
+    <div class="grid-collection content margin-top-7-2">
+        <img class="banner" src="{% static "img/seamstress-gcf37d7d0b_1920.jpg" %}">
         <div class="text-align-left">
             <h2>Lorem Ipsum</h2>
             <br>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A animi, at cumque cupiditate eaque et facilis,
                 fugiat ipsam ipsum laborum magni maiores nesciunt quaerat qui quia rem velit veritatis vero.</p>
     </div>
-</div>
-    <h2 class="center-anything padding-bot padding-top">Nos Engagement</h2>
-    <div class="container-test padding-top padding-bot">
-            <div class="content grid-engagement">
+    </div>
+       <h2 class="content margin-top-7-2">Noeud Papillon</h2>
+    <div class="grid content margin-top">
+    {% for np in noeud_papillon|slice:":4" %}
+    <div>
+        <a href="{{ np.get_absolute_url }}">
+            <img  class="photo-size" src="{% if np.main_image %}{{ np.main_image.url }}{% else %}{% static "img/imge.png" %}{% endif %}" alt="{{ np.name }}"></a>
+            <br>
+            <a href="{{ np.get_absolute_url }}"><p class="text-card margin-left-card ">{{ np.name }}</p></a>
+            <p class="float-right price-card margin-right-card">{{ np.price }}€</p>
+    </div>
+  {% endfor %}
+    </div>
+
+    <h2 class="center-anything margin-top-7-2">Nos Engagement</h2>
+    <div class="container-test padding-top padding-bot margin-top-7-2">
+            <div class="content grid-engagement place-items-center">
                 <div>
-                    <div class="center-anything padding-bot">
+                    <div class="center-anything">
                     <img class="social-icon" src="{% static "img/Impact social.png" %}">
                         </div>
-                    <h3 class="center-anything text-align-center">Lien Social</h3>
+                    <h3 class="text-align-center">Lien Social</h3>
                     <br>
-                <p class="center-anything text-align-center text-line-space">
+                <p class=" text-align-center text-line-space text-space-used">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut beatae consequatur delectus explicabo harum libero,
-            minima nesciunt nostrum nulla omnis praesentium tenetur velit. Alias aliquid eligendi reiciendis? Adipisci, facilis natus!sfd
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquid, doloremque excepturi
-                    exercitationem hic illum in ipsum iusto labore laboriosam nihil non odio quod recusandae reiciendis suscipit tempore ut voluptatibus.
+                    minima nesciunt nostrum nulla omnis praesentium tenetur velit. Alias aliquid eligendi reiciendis? Adipisci,
+                    facilis natus!sfd dfsdfsdfsdfsdfsdfsdfdsfsf Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Accusamus aliquid, doloremque excepturi exercitationem hic illum in ipsum iusto labore laboriosam nihil non odio quod recusandae reiciendis suscipit tempore ut voluptatibus.
                 </p>
                     </div>
                 <div>
-                    <div class="center-anything padding-bot">
+                    <div class="center-anything">
                         <img class="social-icon" src="{% static "img/kisspng-handicraft-computer-icons-handcraft-5b23f8dba56a99.3409239315290841236776.png" %}">
                         </div>
-                    <h3 class="center-anything text-align-center">Fabrication Française à la Main</h3>
+                    <h3 class="text-align-center">Fabrication Française à la Main</h3>
                     <br>
-                <p class="center-anything text-align-center text-line-space">
+                <p class="text-align-center text-line-space text-space-used">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut beatae consequatur delectus explicabo harum libero,
             minima nesciunt nostrum nulla omnis praesentium tenetur velit. Alias aliquid eligendi reiciendis? Adipisci, facilis natus!sfd
         dfsdfsdfsdfsdfsdfsdfdsfsf Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquid, doloremque excepturi
@@ -64,12 +71,12 @@ rtrg
                 </p>
                     </div>
                 <div>
-                    <div class="center-anything padding-bot">
+                    <div class="center-anything">
                         <img class="social-icon" src="{% static "img/43410.png" %}">
                         </div>
-                    <h3 class="center-anything text-align-center">Intemporelles</h3>
+                    <h3 class="text-align-center text-line-space">Intemporelles</h3>
                     <br>
-                <p class="center-anything text-align-center text-line-space">
+                <p class="text-align-center text-line-space text-space-used">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut beatae consequatur delectus explicabo harum libero,
             minima nesciunt nostrum nulla omnis praesentium tenetur velit. Alias aliquid eligendi reiciendis? Adipisci, facilis natus!sfd
         dfsdfsdfsdfsdfsdfsdfdsfsf Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus aliquid, doloremque excepturi
@@ -78,19 +85,16 @@ rtrg
                     </div>
             </div>
     </div>
-    <h2 class="content padding-top">Nouveaux Produits</h2>
-    <div class="grid padding-top place-items-center">
-        {% for product in products|slice:":4" %}
-        <div>
-            <a href="{{ product.get_absolute_url }}">
-            <img  class="photo-size" src="{% if product.main_image %}{{ product.main_image.url }}{% else %}{% static "img/imge.png" %}{% endif %}" alt="">
-            <br>
-            <a href="{{ product.get_absolute_url }}"><p class="text-card display-block margin-left-card ">{{ product.name }}</p></a>
-            <p class="float-right price-card margin-right-card">{{ product.price }}€</p>
-            <p class="padding-bot"></p>
-            </a>
-        </div>
-
+    <h2 class="content margin-top-7-2">Chouchou</h2>
+    <div class="grid content margin-top">
+        {% for chou in chouchou|slice:":4" %}
+            <div>
+                <a href="{{ chou.get_absolute_url }}">
+                <img  class="photo-size" src="{% if chou.main_image %}{{ chou.main_image.url }}{% else %}{% static "img/imge.png" %}{% endif %}" alt="{{ chou.name }}"></a>
+                <br>
+                <a href="{{ chou.get_absolute_url }}"><p class="text-card margin-left-card ">{{ chou.name }}</p></a>
+                <p class="float-right price-card margin-right-card">{{ chou.price }}€</p>
+            </div>
         {% endfor %}
 </div>
 {% endblock %}

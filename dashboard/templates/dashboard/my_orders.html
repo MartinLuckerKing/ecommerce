@@ -1,17 +1,17 @@
 {% extends "shop/base.html" %}
 {% load static %}
-
+{% block title %} <title>Mes commandes</title> {% endblock %}
 {% block content %}
-<div class="content-dashboard">
+<div class="content-dashboard margin-top">
     <div class="container-dashboard">
         <div class="container-dashboard-item margin-top">
-            <ul class="menu-list">
-                <li><a href="{% url 'dashboard:dashboard' %}">Dashboard</a></li>
-                <li><a href="{% url 'dashboard:my_orders' user_id=user.id %}">My Orders</a></li>
-                <li><a href="{% url 'dashboard:edit_profile' %}">Edit Profile</a></li>
-                <li><a href="{% url 'dashboard:change_password' %}">Change Password</a></li>
+                <ul>
+                    <li class="liste-link"><a href="{% url 'dashboard:dashboard' %}">Tableau de bord</a></li>
+                    <li class="liste-link"><a href="{% url 'dashboard:my_orders' user_id=user.id %}">Mes commandes</a></li>
+                    <li class="liste-link"><a href="{% url 'dashboard:edit_profile' %}">Editer le profile</a></li>
+                    <li class="liste-link"><a href="{% url 'dashboard:change_password' %}">Changer le mot de passe</a></li>
 
-            </ul>
+                </ul>
         </div >
     <table class="margin-top">
 

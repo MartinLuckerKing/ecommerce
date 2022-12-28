@@ -2,13 +2,13 @@
 {% load static %}
 
 {% block title %}*
-    {{ product.name }}
+    <title>Panier</title>
 {% endblock %}
 
 <body>
 
 {% block content %}
-<div class="content">
+<div class="content margin-top">
 <h1>Votre Panier</h1>
 <table class="width-100">
     <thead >
@@ -67,9 +67,9 @@
     </tbody>
 </table>
     <p class="content text-align-right margin-top">
-        <a href="{% url "shop:product_list" %}" class="button continue-shopping-button text-align-center">Continue Shopping</a>
+        <a href="{% url "shop:product_list" %}" class="button continue-shopping-button text-align-center">Continuer d'acheter</a>
         <br>
-        <a href="{% url "order:checkout" %}" class="button continue-shopping-button text-align-center">Checkout</a>
+        <a href="{% url "order:checkout" %}" class="button continue-shopping-button text-align-center">Passer la commande</a>
 
     </p>
 </div>

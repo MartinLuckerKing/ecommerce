@@ -1,26 +1,42 @@
 {% extends "shop/base.html" %}
 {% load static %}
-
+{% block title %} <title>Editer le profil</title> {% endblock %}
 {% block content %}
-<div class="content-dashboard">
+<div class="content-dashboard margin-top">
     <div class="container-dashboard ">
         <div class="container-dashboard-item margin-top">
-            <ul class="menu-list">
-                <li><a href="{% url 'dashboard:dashboard' %}">Dashboard</a></li>
-                <li><a href="{% url 'dashboard:my_orders' user_id=user.id %}">My Orders</a></li>
-                <li><a href="{% url 'dashboard:edit_profile' %}">Edit Profile</a></li>
-                <li><a href="{% url 'dashboard:change_password' %}">Change Password</a></li>
+                <ul>
+                    <li class="liste-link"><a href="{% url 'dashboard:dashboard' %}">Tableau de bord</a></li>
+                    <li class="liste-link"><a href="{% url 'dashboard:my_orders' user_id=user.id %}">Mes commandes</a></li>
+                    <li class="liste-link"><a href="{% url 'dashboard:edit_profile' %}">Editer le profile</a></li>
+                    <li class="liste-link"><a href="{% url 'dashboard:change_password' %}">Changer le mot de passe</a></li>
 
-            </ul>
+                </ul>
         </div >
 <form action="" method="POST" class="margin-top">
     {% csrf_token %}
-    {% for fm in form %}
-        <p>{{ fm.label_tag }}</p> <p class="textinput">{{ fm }}</p> {{ fm.errors|striptags }}<br> <br>
-    {% endfor %}
 
+{% if messages %}
+    {% for message in messages %}
+        <p class="margin-bot">{{ message }}</p>
+    {% endfor %}
+  {% endif %}
+    <br>
+
+    {% for fm in form %}
+        <p>{{ fm.label_tag }}</p> <p class="textinput">{{ fm }}</p> {{ fm.errors|striptags }}<br>
+
+        {% endfor %}
+
+
+
+    <br>
 <button type="submit" name="submit" class="buy-now-button">Envoyer</button>
 </form>
+
+
+
+
 </div >
 </div >
 

@@ -1,12 +1,12 @@
 {% extends 'shop/base.html' %}
-{% load crispy_forms_filters %}
 {% block title %} <title>Login</title> {% endblock %}
+
 {% block content %}
     <h1 class="center-anything padding-top">Se Connecter</h1>
     <div class="center-anything padding-top padding-bot">
         <form method="post" class="content">
         {% csrf_token %}
-            {% for fm in form %}
+            {% for fm in  form %}
                 {{ fm.label_tag }} <div class="textinput">{{ fm }}</div> <div class="color-error error-message">{{ fm.errors|striptags }}</div><br>
             {% endfor %}
     <button type="submit" class="buy-now-button margin-bot">SE CONNECTER</button>

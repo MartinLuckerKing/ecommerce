@@ -1,5 +1,6 @@
 import decimal
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 import datetime
 import json
@@ -64,7 +65,7 @@ def payment(request):
         product.stock = new_stock
         product.save(update_fields=['stock'])
         print(new_stock)
-    return render(request, 'order/payment.html')
+    return render(request, 'order/order_complete.html')
 
 
 def place_order(request, total=0):
@@ -118,27 +119,8 @@ def place_order(request, total=0):
 
 
 def order_complete(request):
-    order_number = request.GET.get('order_number')
-    transID = request.GET.get('payment_id')
+    cart = Cart(request)
+    cart.clear()
+    return render(request, 'order/order_complete.html')
 
-    try:
-        order = Order.objects.get(order_number=order_number, is_ordered=True)
-        ordered_products = OrderProduct.objects.filter(order_id=order.id)
 
-        subtotal = 0
-        for i in ordered_products:
-            subtotal += i.product_price * i.quantity
-
-        payment = Payment.objects.get(payment_id=transID)
-
-        context = {
-            'order': order,
-            'ordered_products': ordered_products,
-            'order_number': order.order_number,
-            'transID': payment.payment_id,
-            'payment': payment,
-            'subtotal': subtotal,
-        }
-        return render(request, 'order/order_complete.html', context)
-    except (Payment.DoesNotExist, Order.DoesNotExist):
-        return redirect('home')

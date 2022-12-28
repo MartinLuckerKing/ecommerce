@@ -4,107 +4,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Espace Condorcet</title>
+    {% block title %}<title>Espace Condorcet</title> {% endblock %}
 
     <link rel="stylesheet" href="{% static "css/style.css" %}"/>
     <script src="https://kit.fontawesome.com/500f1a3f21.js" crossorigin="anonymous"></script>
 
 </head>
-
 <body>
+
+<div class="center-anything">
+  <div class="margin-top-2-6">
+        <div class="logo content text-align-center margin-bot">
+        <h1><a href="{% url "shop:home_page" %}"> Atelier Couture <br> Espace Condorcet</a></h1>
+      </div>
 
 {% block navbar %}
 
-  <nav class="navbar">
-    <div class="center-anything padding-bot">
-        <div class="logo content">
-        <a class="text-align-center" href="{% url "shop:home_page" %}"> Atelier Couture <br> Espace Condorcet</a>
-      </div>
-    </div>
-  <div class="center-anything">
-    <div class="content">
+      <div class="center-anything content">
+   <div class="dropdown-inline">
+      <button class="link">Boutique<i class="fa-solid fa-angle-down"></i></button>
 
-      <ul class="menu-list">
-        <div class="icon cancel-btn">
-          <i class="fas fa-times"></i>
-
-        </div>
-  <div class="header">
-    <div class="dropdown" data-dropdown>
-      <button class="link" data-dropdown-button>Boutique<i class="fa-solid fa-angle-down"></i></button>
-
-      <div class="dropdown-menu information-grid">
-          <a class="link buttton-dropdown" href="{% url "shop:product_list" %}">Tous nos Produits</a>
+      <div class="dropdown-content">
+          <a class="link-margin-left-zero " href="{% url "shop:product_list" %}">Tous nos Produits</a>
           <br>
           {% for categorie in categories %}
-          <a class="link buttton-dropdown" href="{% url "shop:product_list_by_category" categorie.slug %}">{{ categorie.name }}</a>
+          <a class="link-margin-left-zero" href="{% url "shop:product_list_by_category" categorie.slug %}">{{ categorie.name }}</a>
               <br>
-
           {% endfor %}
-
     </div>
   </div>
-</div>
+
+
           <a class="link" href="#">Qui Sommes-Nous</a>
 
-          {% with total_items=cart|length%}
-              {% if total_items > 0 %}
-                  <a class="link" href="{% url "cart:cart_detail" %}">Mon Panier({{ total_items }})</a>
-                    {% else %}
-                    <a class="link" href="{% url "cart:cart_detail" %}">Mon Panier({{ total_items }})</a>
-                    {% endif %}
-                    {% endwith %}
+          <a class="link" href="{% url "cart:cart_detail" %}">Mon Panier({{ cart|length }})</a>
           {% if not request.user.is_authenticated %}
               <a class="link" href="{% url "user:sign_up" %}">S'incrire</a>
               <p>/</p>
               <a class="link-margin-left-zero" href="{% url "login" %}">Se connecter</a>
           {% endif %}
           {% if request.user.is_authenticated %}
-              <p class="link"><a href="{% url 'dashboard:dashboard' %}">Bonjour {{ request.user.username }} </a>    </p>
+              <p class="link"><a href="{% url 'dashboard:dashboard' %}">Bonjour {{ request.user.username }} </a></p>
               <a class="link" href="{% url "logout" %}">Se déconnecter</a>
           {% endif %}
-
-      </ul>
-      <div class="icon menu-btn">
-        <i class="fas fa-bars"></i>
-      </div>
-    </div>
+</div>
   </div>
-  </nav>
-
-
-
+    </div>
 {% endblock %}
 
 {% block content %}  {% endblock %}
 
 
 {% block footer %}
-    <footer class="footer padding-top-footer">
-  	 <div class="container text-line-space">
-  	 	<div class="row footer-grid">
-  	 		<div class="footer-col" >
-  	 			<h2 class="line-height-title-footer">Aide</h2>
+    <footer class="footer padding-top-footer text-line-space">
+  	 	<div class="content footer-grid">
+  	 		<div class="footer-col-list-style-none">
+  	 			<h2 class="line-height-title-footer margin-left-2-5">Aide</h2>
   	 			<ul>
-  	 				<li><a class="link " href="#">Guide des tailles</a></li>
+  	 				<li><a class="link" href="#">Guide des tailles</a></li>
   	 				<li><a class="link" href="#">Points de vente</a></li>
   	 				<li><a class="link" href="#">Livraison & retour</a></li>
   	 			</ul>
   	 		</div>
-  	 		<div class="footer-col">
-  	 			<h2 class="line-height-title-footer">Infos</h2>
+  	 		<div class="footer-col-list-style-none">
+  	 			<h2 class="line-height-title-footer margin-left-2-5">Infos</h2>
   	 			<ul>
   	 				<li><a class="link" href="#">Contact</a></li>
   	 				<li><a class="link" href="#">Condition de vente</a></li>
   	 				<li><a class="link" href="#">Mentions légales</a></li>
   	 			</ul>
   	 		</div>
-  	 		<div class="footer-col">
-  	 			<h2 class="text-align-center">Atelier Couture <br> Espace Condorcet</h2>
-
+  	 		<div class="footer-col logo-footer text-align-center">
+  	 			<a href="{% url "shop:home_page" %}">Atelier Couture <br> Espace Condorcet</a>
   	 			</div>
   	 		</div>
-  	 	</div>
         <br>
         <div class="social-links ">
             <h3 class="center-anything">Suivez-nous</h3>
@@ -131,16 +104,7 @@
 {% endblock %}
 
 </body>
-    <script src="{% static "js/test.js" %}"></script>
-  <script src="{% static "js/navbar.js" %}"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
-        function myFunction(smallImg)
-        {
-            const fullImg = document.getElementById("mainImage");
-            fullImg.src = smallImg.src;
-        }
-    </script>
-<!-- PayPal Script -->
+<script src="{% static "js/product_image.js" %}"></script>
+
 
 </html>

@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_POST
 from cart.cart import Cart
 from cart.forms import CartAddProductForm
-from cart.models import CartItem
 from shop.models import Product
 
 
@@ -24,11 +23,6 @@ def cart_add(request, product_id):
     if form.is_valid():
         cd = form.cleaned_data
         cart.add(product=product, quantity=cd['quantity'], overrride_quantity=cd['override'])
-        cart_item = CartItem.objects.create(
-            product=product,
-            quantity=cd['quantity'],
-        )
-        CartItem.save(cart_item)
     return redirect('cart:cart_detail')
 
 

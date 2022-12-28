@@ -2,15 +2,15 @@
 {% load static %}
 
 {% block title %}
-
+<title> Panier Vide</title>
 {% endblock %}
 
 
 {% block content %}
-    <section class="content center-top-bottom ">
+    <div class="content center-top-bottom margin-top">
         <h1 class="margin-top"> Votre Panier Est Vide</h1>
-        <div class=" ">
+        <div>
             <a class="buy-now-button all-product-btn" href="{% url 'shop:product_list' %}"><p class="center-anything">Tous les Produits</p></a>
         </div>
-    </section>
+    </div>
 {% endblock %}

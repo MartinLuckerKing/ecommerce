@@ -1,17 +1,19 @@
 {% extends "shop/base.html" %}
 {% load static %}
 
-{% block content %}
+{% block title %} <title>Panier</title> {% endblock %}
 
-    <div class="content">
+{% block content %}
+    <div class="content margin-top">
     <!-- Replace "test" with your own sandbox Business account app client ID -->
 <!-- row.// -->
         <!-- Replace "test" with your own sandbox Business account app client ID -->
     <script src="https://www.paypal.com/sdk/js?client-id=Aac0eEkrStclqM34AqFksqZJ6YI_dqp8R-3FDdhzL5-dETJ_zZeVjUg2D4XT4LzaoBy_1xE31dX3Ctju&currency=EUR"></script>
     <!-- Set up a container element for the button -->
         <h2 class="content center-anything margin-bot">Récapitulatif</h2>
-        <div class="container-payment-title margin-bot">
-            <div class="col1 float-left ">
+        <div class="container-payment-title margin-bot justify-content-center">
+
+            <div class="col1 float-left">
                 <p class="font-weight-bolder">Adresse de Livraison</p>
                     {{ order.first_name }} {{ order.last_name }}<br>
                     {{ order.address_line_1 }}<br>
@@ -26,12 +28,10 @@
                 <p class="font-weight-bolder margin-top">Moyen de Paiement</p>
                 <div id="paypal-button-container"></div>
             </div>
-
-
-            <div class="col2 float-left margin-left">
+            <div>
                 <p class="font-weight-bolder">Commande</p>
-                <table class="">
-                    <thead >
+                <table>
+                    <thead>
                         <tr>
                              <th></th>
                             <th></th>
@@ -40,11 +40,11 @@
                     <tbody>
                         {% for item in cart%}
                         {% with product=item.product %}
-                                <td class="display-block">
+                                <td class="">
                                         <a href="{{ product.get_absolute_url }}">
                                         <img class="image-size" src="{% if product.main_image %}{{ product.main_image.url }}">
                                         {% else %}{% static "img/imge.png" %}{% endif %} </a>
-                            <td class="display-inline-block margin-left">
+                            <td class="">
                                <p>{{ product.name }}</p>
                                <p>{{ product.price }}€</p>
                             </td>
@@ -54,11 +54,8 @@
 
                 </table>
             </div>
-        <div class="color-text-white">azertyuiop</div>
-
-</div>
         </div>
-
+</div>
     <script>
  function getCookie(name) {
     let cookieValue = null;
@@ -78,12 +75,13 @@
 
     let amount = {{ cart.get_total_price }}
     const url = "{% url 'order:payment' %}"
-	let csrftoken = getCookie('csrftoken');
+	let csrftoken = getCookie('csrftoken')
 	let orderID = "{{order.order_number}}"
 	const payment_method = 'PayPal'
-	const redirect_url = "{% url 'order:order_complete' %}"
+    const redirect_url = "{% url 'order:order_complete' %}"
 
-      paypal.Buttons({
+
+        paypal.Buttons({
         // Sets up the transaction when a payment button is clicked
         createOrder: (data, actions) => {
           return actions.order.create({
@@ -112,14 +110,15 @@
 							status: orderData.status,
 						}),
 					})
-				  .then((response) => response.json())
-				  .then((data) => {
-						window.location.href = redirect_url + '?order_number='+data.order_number+'&payment_id='+data.transID;
+                        .then(function (responseFromServer) {
+                    if(responseFromServer.status === 200) {
+                        location.href = '{% url "order:order_complete" %}';
+                    }
 					});
 				}
           });
         }
       }).render('#paypal-button-container');
     </script>
-</div>
+
 {% endblock %}

@@ -1,28 +1,26 @@
 {% extends "shop/base.html" %}
 {% load static %}
 
-{% block title %}*
-    {{ product.name }}
+{% block title %}
+    <title>{{ product.name }}</title>
 {% endblock %}
 
 {% block content %}
-    <div class="product-detail-grid-wrapper content">
+    <div class="product-detail-grid-wrapper content margin-top">
         <div>
             <div>
-                <img id="mainImage" class="photo-size-product-detail" src="
-                           {{ product.main_image.url }}"
+                <img id="mainImage" class="photo-size-product-detail" src="{{ product.main_image.url }}"
                      alt="{% if product.name %}{{ product.name }}{% else %}product{% endif %}">
             </div>
         <div>
-        <img class="thumb photo-size-product-detail-max" src="{% if product.main_image.url %}
+        <img class="thumb" src="{% if product.main_image.url %}
+        {{ product.main_image.url }}{% else %}{% static "img/imge.png" %}{% endif %}" onclick="myFunction(this)">
+            {% for image in multiimages %}
 
-                       {{ product.main_image.url }}{% else %}{% static "img/imge.png" %}{% endif %}" onclick="myFunction(this)">
-        {% for image in multiimages %}
+                <img class="thumb" src="{% if image.images.url %}
 
-            <img class="thumb photo-size-product-detail-max" src="{% if image.images.url %}
-
-                       {{ image.images.url }}{% else %}{% static "img/imge.png" %}{% endif %}" onclick="myFunction(this)">
-        {% endfor %}
+                           {{ image.images.url }}{% else %}{% static "img/imge.png" %}{% endif %}" onclick="myFunction(this)">
+            {% endfor %}
     </div>
     </div>
 
@@ -33,18 +31,14 @@
                 {{ cart_product_form }}
                 {% csrf_token %}
                 <br>
-                    <button class="add-to-cart-button" type="submit" value="Add to cart">Ajouter au panier</button>
-
-
-            </form>
-        <button class="buy-now-button" type="submit" value="Add to cart">Acheter maintenant</button>
+                    <button class="buy-now-button margin-top" type="submit">Ajouter au panier</button>
+                </form>
             <p class="margin-top-2-6">{{ product.description|safe }}</p>
                 </div>
-
     </div >
 
-        <hr class="padding-bot">
+        <hr class="margin-bot">
     <h3 class="center-anything">LIVRAISON OFFERTE</h3>
-    <p class="center-anything padding-bot">Livraison offertes dès 160€ d'achats.</p>
+    <p class="center-anything margin-bot">Livraison offertes dès 160€ d'achats.</p>
 
 {% endblock %}

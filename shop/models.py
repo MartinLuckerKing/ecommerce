@@ -24,13 +24,11 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, related_name='product', on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, default=None, on_delete=models.CASCADE)
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True)
     main_image = models.ImageField(blank=True, null=True, default=None, upload_to='products/%Y/%m/%d')
     description = RichTextField(blank=True, null=True)
-    material_used = RichTextField(blank=True, null=True)
-    expedition = RichTextField(blank=True, null=True)
     stock = models.IntegerField(blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     available = models.BooleanField(default=True)
@@ -52,5 +50,3 @@ class Product(models.Model):
 class MultiProductImage(models.Model):
     product = models.ForeignKey(Product, default=None, on_delete=models.CASCADE)
     images = models.ImageField(upload_to='products/%Y/%m/%d')
-
-

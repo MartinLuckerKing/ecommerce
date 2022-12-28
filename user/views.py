@@ -1,10 +1,9 @@
 from .forms import RegistrationForm
 from django.contrib.auth import login
-from django.shortcuts import render, redirect
-from .models import User
-
+from django.shortcuts import render
 
 # Create your views here.
+
 
 def sign_up(request):
     if request.method == 'POST':

@@ -1,7 +1,15 @@
 {% extends "shop/base.html" %}
 {% load static %}
 
-{% block content %}
+{% block title %} <title>Commande réussie</title> {% endblock %}
 
+{% block content %}
+<div class="content margin-top">
+    <p class="font-weight-bolder center-anything margin-top">
+        Paiement Réussie !</p>
+
+        <a class="buy-now-button all-product-btn" href="{% url 'shop:home_page' %}"><p class="center-anything">Retourner à l'accueil</p></a>
+
+</div>
 
 {% endblock %}

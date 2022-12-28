@@ -1,15 +1,16 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Category, Product, MultiProductImage
 from cart.forms import CartAddProductForm
-# Create your views here.
 
 
 def home_page(request):
-    products = Product.objects.all()
     categories = Category.objects.all()
+    chouchou = Product.objects.filter(category=1)
+    noeud_papillon = Product.objects.filter(category=2)
     context = {
-        'products': products,
         'categories': categories,
+        'chouchou': chouchou,
+        'noeud_papillon': noeud_papillon,
                }
     return render(request, 'shop/home_page.html', context)
 
@@ -30,17 +31,14 @@ def product_list(request, category_slug=None):
 
 
 def product_detail(request, id, slug):
-    main_image = Product.objects.all()
-    products = Product.objects.filter(available=True)
     product = get_object_or_404(Product, id=id, slug=slug, available=True)
     multiimages = MultiProductImage.objects.filter(product_id=product.id)
     cart_product_form = CartAddProductForm()
     context = {
         'cart_product_form': cart_product_form,
         'product': product,
-        'products': products,
         'multiimages': multiimages,
-        'main_image': main_image,
+
     }
 
     return render(request, 'shop/product/detail.html', context)

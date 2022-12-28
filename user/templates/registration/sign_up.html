@@ -1,16 +1,15 @@
 {% extends 'shop/base.html' %}
-{% block title %} <title>Login</title> {% endblock %}
+{% block title %} <title>Inscription</title> {% endblock %}
 
 {% block content %}
-    <h1 class="center-anything padding-top">Inscription</h1>
-    <div class="center-anything padding-top padding-bot">
-
+    <h1 class="center-anything margin-top">Inscription</h1>
+    <div class="center-anything margin-top">
         <form method="post" class="content">
         {% csrf_token %}
             {% for fm in form %}
                 {{ fm.label_tag }} <div class="textinput">{{ fm }}</div> <div class="color-error error-message">{{ fm.errors|striptags }}</div><br>
             {% endfor %}
-    <button type="submit" class="buy-now-button margin-bot">CRÉER MON COMPTE</button>
+    <button type="submit" class="buy-now-button margin-top-1-5">CRÉER MON COMPTE</button>
         </form>
 
     </div>

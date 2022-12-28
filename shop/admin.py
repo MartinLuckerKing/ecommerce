@@ -1,7 +1,6 @@
 import admin_thumbnails
 from .models import Category, Product, MultiProductImage
 from django.contrib import admin
-# Register your models here.
 
 
 @admin.register(Category)
@@ -25,7 +24,5 @@ class ProductAdmin(admin.ModelAdmin):
     prepopulated_field = {'slug': ('name',)}
 
     class Meta:
-       model = Product
-
-
+        model = Product
 

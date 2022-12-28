@@ -19,7 +19,7 @@ class RegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ("username", "first_name", "last_name", "email", "age")
+        fields = ("username", "first_name", "last_name", "email", "age", "password1")
 
         labels = {
             'username': 'Nom de Compte',
@@ -27,7 +27,7 @@ class RegistrationForm(UserCreationForm):
             'first_name': 'Prénom',
             'last_name': 'Nom de Famille',
             'age': 'age',
-
+            'password1': 'Mot de passe',
             'password2': 'Répétez le Mot de Passe',
         }
 
@@ -38,4 +38,8 @@ class EditProfileForm(UserChangeForm):
     class Meta:
         model = User
         fields = ["last_name", "first_name", "email"]
-        labels = {'email': 'Email'}
+        labels = {
+            'email': 'Email',
+            'last_name':'Nom de famille',
+            'first_name': 'Prénom',
+        }
